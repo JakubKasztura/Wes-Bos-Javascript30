@@ -40,7 +40,11 @@ const startCountingTime = function (cS, cM, cH) {
     }
     HOUR_HAND.style.transform = `rotate(${cH * 30 + 90}deg)`;
     MIN_HAND.style.transform = `rotate(${cM * 6 + 90}deg)`;
-    SECOND_HAND.style.transform = `rotate(${cS * 6 + 90}deg)`;
+    SECOND_HAND.style.transform = `rotate(${cS * 6 + 90 + 1}deg)`;
+    setTimeout(function () {
+      console.log("timed");
+      SECOND_HAND.style.transform = `rotate(${cS * 6 + 90}deg)`;
+    }, 50);
     console.log(cH, cM, cS);
   }, 1000);
 };
