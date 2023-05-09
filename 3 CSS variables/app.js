@@ -1,27 +1,20 @@
-const SPACING_SLIDER = document.getElementById("spacing"),
-  BLUR_SLIDER = document.getElementById("blur"),
-  COLOR_PICKER = document.getElementById("base"),
+const INPUTS = [...document.querySelectorAll("input")],
   IMAGE = document.querySelector("img");
 
-function setStartingCSS() {
-  IMAGE.style.cssText = `
-  filter:blur(${BLUR_SLIDER.value}px);
-  padding: ${SPACING_SLIDER.value}px;
-  background: ${COLOR_PICKER.value}`;
-}
+const setCssProperties = function () {
+  for (const input of INPUTS) {
+    console.log(input);
+    input.addEventListener("input", () => {
+      const root = document.querySelector(":root");
+      if (input.name === "spacing") {
+        root.style.setProperty("--spacingValue", `${input.value}px`);
+      } else if (input.name === "blur") {
+        root.style.setProperty("--blurValue", `${input.value}px`);
+      } else if (input.name === "base") {
+        root.style.setProperty("--baseColor", `${input.value}`);
+      } else return;
+    });
+  }
+};
 
-SPACING_SLIDER.addEventListener("input", () => {
-  const sliderValue = SPACING_SLIDER.value;
-  IMAGE.style.padding = `${sliderValue}px`;
-});
-
-BLUR_SLIDER.addEventListener("input", () => {
-  const sliderValue = BLUR_SLIDER.value;
-  IMAGE.style.filter = `blur(${sliderValue}px)`;
-});
-
-COLOR_PICKER.addEventListener("input", () => {
-  const sliderValue = COLOR_PICKER.value;
-  IMAGE.style.background = `${sliderValue}`;
-});
-document.addEventListener("DOMContentLoaded", setStartingCSS);
+document.addEventListener("DOMContentLoaded", setCssProperties);

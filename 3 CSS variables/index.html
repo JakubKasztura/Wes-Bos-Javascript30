@@ -39,6 +39,16 @@
     <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
 
     <style>
+      :root {
+        --spacingValue: 10px;
+        --blurValue: 10px;
+        --baseColor: #ffc600;
+      }
+      img {
+        padding: var(--spacingValue);
+        filter: blur(var(--blurValue));
+        background: var(--baseColor);
+      }
       /*
       misc styles, nothing to do with CSS variables
     */
