@@ -27,15 +27,6 @@ const findMatch = function () {
       matchedResults.push(dataItem);
     }
   }
-  console.log(matchedResults);
-
-  // const uniqueResults1 = [...new Set(matchedResults)]; // one way to remove duplicates
-
-  //second way to remove duplicates
-  // const uniqueResults2 = matchedResults.filter((item, index) => {
-  //   return matchedResults.indexOf(item) === index;
-  // });
-
   displayResults(matchedResults);
 };
 
