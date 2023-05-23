@@ -20,20 +20,23 @@ const findMatch = function () {
     return;
   }
   for (dataItem of fetchedData) {
-    if (dataItem.city.toLowerCase().includes(inputValue)) {
-      matchedResults.push(dataItem.city);
-    } else if (dataItem.state.toLowerCase().includes(inputValue)) {
-      matchedResults.push(dataItem.state);
+    if (
+      dataItem.city.toLowerCase().includes(inputValue) ||
+      dataItem.state.toLowerCase().includes(inputValue)
+    ) {
+      matchedResults.push(dataItem);
     }
   }
+  console.log(matchedResults);
+
   // const uniqueResults1 = [...new Set(matchedResults)]; // one way to remove duplicates
 
   //second way to remove duplicates
-  const uniqueResults2 = matchedResults.filter((item, index) => {
-    return matchedResults.indexOf(item) === index;
-  });
+  // const uniqueResults2 = matchedResults.filter((item, index) => {
+  //   return matchedResults.indexOf(item) === index;
+  // });
 
-  displayResults(uniqueResults2);
+  displayResults(matchedResults);
 };
 
 const displayResults = function (matchedResults) {
@@ -47,8 +50,20 @@ const displayResults = function (matchedResults) {
   }
   for (const result of matchedResults) {
     const listElement = document.createElement("li");
-    listElement.textContent = result;
+    const populationElement = document.createElement("span");
+    populationElement.classList.add("population");
+    if (result.population.length >= 4) {
+      const separatedPopulation = result.population.split("");
+      separatedPopulation.splice(-3, 0, ",");
+      populationElement.textContent = separatedPopulation.join("");
+      if (separatedPopulation.length >= 8) {
+        separatedPopulation.splice(-7, 0, ",");
+        populationElement.textContent = separatedPopulation.join("");
+      }
+    }
+    listElement.textContent = `${result.city}, ${result.state}`;
     list.appendChild(listElement);
+    listElement.appendChild(populationElement);
   }
 };
 
