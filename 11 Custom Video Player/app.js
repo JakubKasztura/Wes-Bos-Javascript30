@@ -1,6 +1,6 @@
 const player = document.querySelector(".player"),
   video = player.querySelector("video"),
-  progress = player.querySelector(".progress"),
+  progressBgc = player.querySelector(".progress"),
   progressFilled = player.querySelector(".progress__filled"),
   playButton = player.querySelector(".player__button"),
   inputVolume = player.querySelector("input[name='volume']"),
@@ -15,7 +15,7 @@ const startAndStopPlaying = function () {
     video.play();
     playButton.innerHTML = "&#10074&#10074";
     videoStatus = true;
-    intervalId = setInterval(changeProgressBar, 200);
+    intervalId = setInterval(changeProgressBarAuto, 200);
   } else {
     video.pause();
     playButton.innerHTML = "►";
@@ -40,9 +40,26 @@ const forward25s = function () {
   video.currentTime += seconds;
 };
 
-const changeProgressBar = function () {
-  let currentTime = video.currentTime;
+const changeProgressBarAuto = function () {
+  let currentTime = (video.currentTime * 100) / video.duration;
   progressFilled.style.flexBasis = `${currentTime}%`;
+  if (currentTime === 100) {
+    playButton.innerHTML = "►";
+  }
+};
+
+const changeProgressBarClick = function (event) {
+  let xCursorPosition = event.offsetX;
+  let percentBarValue = ((xCursorPosition * 100) / 640).toFixed(1);
+  let cursorTimeValue = ((xCursorPosition / 640) * video.duration).toFixed(1);
+  progressFilled.style.flexBasis = `${percentBarValue}%`;
+  video.currentTime = cursorTimeValue;
+};
+
+const bgcStartAndStopPlaying = function (event) {
+  if (event.target === video) {
+    startAndStopPlaying();
+  } else return;
 };
 
 const initial = function () {
@@ -51,6 +68,8 @@ const initial = function () {
   playButton.addEventListener("click", startAndStopPlaying);
   backwardButton.addEventListener("click", backward10s);
   forwardButton.addEventListener("click", forward25s);
+  progressBgc.addEventListener("click", changeProgressBarClick);
+  player.addEventListener("click", bgcStartAndStopPlaying);
 };
 
 document.addEventListener("DOMContentLoaded", initial);
