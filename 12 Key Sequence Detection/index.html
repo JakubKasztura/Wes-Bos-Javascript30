@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Key Detection</title>
+    <script type="text/javascript" src="./cornify.js" defer></script>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <script>
+      let pressedButtons = [];
+      let secretCode = "jacob";
+      window.addEventListener("keyup", (event) => {
+        pressedButtons.push(event.key);
+        if (pressedButtons.length > 5) {
+          pressedButtons.splice(0, 1);
+        }
+        if (pressedButtons.join("").includes(secretCode)) {
+          cornify_add();
+        }
+      });
+    </script>
+  </body>
+</html>
