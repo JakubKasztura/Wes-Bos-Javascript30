@@ -12,7 +12,7 @@
       let secretCode = "jacob";
       window.addEventListener("keyup", (event) => {
         pressedButtons.push(event.key);
-        if (pressedButtons.length > 5) {
+        if (pressedButtons.length > secretCode.length) {
           pressedButtons.splice(0, 1);
         }
         if (pressedButtons.join("").includes(secretCode)) {
